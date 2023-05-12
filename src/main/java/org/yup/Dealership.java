@@ -17,38 +17,70 @@ public class Dealership {
     }
 
     public List<Vehicle> getVehiclesByPrice(double min, double max) {
-        List<Vehicle> stock = new ArrayList<>();
-        return stock;
+        List<Vehicle> stock1 = new ArrayList<>();
+        for(Vehicle vehicle: this.inventory) {
+            if(vehicle.price >= min && vehicle.price <= max) {
+                stock1.add(vehicle);
+            }
+        }
+        return stock1;
     }
 
     public List<Vehicle> getVehiclesByMakeModel(String make, String model) {
-        List<Vehicle> stock = new ArrayList<>();
-        return stock;
+        List<Vehicle> stock2 = new ArrayList<>();
+
+        for(Vehicle vehicle : this.inventory) {
+            if(vehicle.make.equalsIgnoreCase(make) && vehicle.model.equalsIgnoreCase(model)) {
+                stock2.add(vehicle);
+            }
+        }
+        return stock2;
     }
 
     public List<Vehicle> getVehiclesByYear(double min, double max) {
-        List<Vehicle> stock = new ArrayList<>();
-        return stock;
+        List<Vehicle> stock3 = new ArrayList<>();
+
+        for(Vehicle vehicle : this.inventory) {
+            if(vehicle.year >= min && vehicle.year <= max) {
+                stock3.add(vehicle);
+            }
+        }
+        return stock3;
     }
 
     public List<Vehicle> getVehiclesByColor(String color) {
-        List<Vehicle> stock = new ArrayList<>();
-        return stock;
+        List<Vehicle> stock4 = new ArrayList<>();
+
+        for(Vehicle vehicle : this.inventory) {
+            if(vehicle.color.equalsIgnoreCase(color)) {
+                stock4.add(vehicle);
+            }
+        }
+        return stock4;
     }
 
     public List<Vehicle> getVehiclesByMileage(double min, double max) {
-        List<Vehicle> stock = new ArrayList<>();
-        return stock;
+        List<Vehicle> stock5 = new ArrayList<>();
+        for (Vehicle vehicle : this.inventory) {
+            if(vehicle.odometer >= min && vehicle.odometer <= max) {
+                stock5.add(vehicle);
+            }
+        }
+        return stock5;
     }
 
     public List<Vehicle> getVehiclesByType(String vehicleType) {
-        List<Vehicle> stock = new ArrayList<>();
-        return stock;
+        List<Vehicle> stock5 = new ArrayList<>();
+        for(Vehicle vehicle : this.inventory) {
+            if(vehicle.vehicleType.equalsIgnoreCase(vehicleType)) {
+                stock5.add(vehicle);
+            }
+        }
+        return stock5;
     }
 
     public List<Vehicle> getAllVehicles() {
-        List<Vehicle> stock = new ArrayList<>();
-        return stock;
+        return this.inventory;
     }
 
     public void addVehicle(Vehicle vehicle) {
