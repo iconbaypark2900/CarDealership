@@ -16,6 +16,10 @@ public class Dealership {
         this.phone = phone;
     }
 
+    public Dealership() {
+        this.inventory = new ArrayList<>();
+    }
+
     public List<Vehicle> getVehiclesByPrice(double min, double max) {
         List<Vehicle> stock1 = new ArrayList<>();
         for(Vehicle vehicle: this.inventory) {
