@@ -6,15 +6,17 @@ import java.io.FileReader;
 import java.io.FileWriter;
 
 public class DealershipFileManager {
-    public String getDealership() {
-        Dealership dealership = new Dealership();
+    public Dealership getDealership() {
+        Dealership dealership = new Dealership("Jon B", "2009 sw 102nd ter", "333-333-3333");
 
         try {
             FileReader fr = new FileReader("dealership.csv");
             BufferedReader br = new BufferedReader(fr);
 
             String line;
+            br.readLine();
             while((line = br.readLine()) != null) {
+
                 String[] instances = line.split("\\|");
                 int vin = Integer.parseInt(instances[0]);
                 int year = Integer.parseInt(instances[1]);
@@ -41,6 +43,9 @@ public class DealershipFileManager {
             FileWriter fw = new FileWriter("dealership.csv");
             BufferedWriter bw = new BufferedWriter(fw);
 
+            bw.write(dealership.getAddress() + "|" + dealership.getName() + "|" + dealership.getPhone());
+            bw.newLine();
+
             for(Vehicle vehicle : dealership.getAllVehicles()) {
                 String stockSD = String.format("%d|%d|%s|%s|%s|%s|%s",
                         vehicle.vin,
@@ -54,6 +59,7 @@ public class DealershipFileManager {
                 bw.write(stockSD);
                 bw.newLine();
             }
+            bw.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -8,16 +8,12 @@ public class Dealership {
     public String name;
     public String address;
     public String phone;
-    public List<Vehicle> inventory;
+    public List<Vehicle> inventory = new ArrayList<>();
 
     public Dealership(String name, String address, String phone) {
         this.name = name;
         this.address = address;
         this.phone = phone;
-    }
-
-    public Dealership() {
-        this.inventory = new ArrayList<>();
     }
 
     public List<Vehicle> getVehiclesByPrice(double min, double max) {
@@ -91,8 +87,13 @@ public class Dealership {
         this.inventory.add(vehicle);
     }
 
-    public void removeVehicle(Vehicle vehicle) {
-        this.inventory.remove(vehicle);
+    public boolean removeVehicle(int vin) {
+        for(Vehicle vehicle : this.inventory) {
+            if(vehicle.getVin() == vin) {
+               return this.inventory.remove(vehicle);
+            }
+        }
+        return false;
     }
 
     public String getName() {
