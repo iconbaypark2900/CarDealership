@@ -1,5 +1,6 @@
 package org.yup;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -23,8 +24,18 @@ public class UserInterface {
 //    }
 
     public void display() {
+        System.out.println("--------Menu--------");
         System.out.println("1) Price ");
-        System.out.println("2) ");
+        System.out.println("2) Make & Model");
+        System.out.println("3) Year");
+        System.out.println("4) Color");
+        System.out.println("5) Mileage");
+        System.out.println("6) Body Style");
+        System.out.println("7) Get All");
+        System.out.println("8) Add");
+        System.out.println("9) Remove");
+        System.out.print("Enter choice: ");
+
         int pick = scanner.nextInt();
         switch (pick) {
             case 1:
@@ -43,12 +54,15 @@ public class UserInterface {
                 processGetByMileageRequest();
                 break;
             case 6:
-                processGetAllVehicleRequest();
+                processGetByVehicleTypeRequest();
                 break;
             case 7:
-                processAddVehicleRequest();
+                processGetAllVehicleRequest();
                 break;
             case 8:
+                processAddVehicleRequest();
+                break;
+            case 9:
                 processRemoveVehicleRequest();
                 break;
         }
@@ -64,7 +78,8 @@ public class UserInterface {
 
         List<Vehicle> price = dealership.getVehiclesByPrice(minPrice, maxPrice);
         for(Vehicle vehicle : price) {
-            System.out.println(vehicle);
+            System.out.println("vin: " + vehicle.getVin() + ", year: " + vehicle.getYear() + ", make: " + vehicle.getMake() + ", model: " + vehicle.getModel() + ", color: " + vehicle.getColor() + ", mileage: " + vehicle.getOdometer() + ", body style: " + vehicle.getVehicleType() + ", price: "+vehicle.getPrice()
+            );
         }
 
     }
@@ -77,7 +92,8 @@ public class UserInterface {
 
         List<Vehicle> manufacturer = dealership.getVehiclesByMakeModel(theMake, theModel);
         for (Vehicle vehicle : manufacturer) {
-            System.out.println(vehicle);
+            System.out.println("make: " + vehicle.getMake()+ ", model: " + vehicle.getModel()+ ", vin: " + vehicle.getVin() + ", year: " + vehicle.getYear() + ", color: " + vehicle.getColor() + ", mileage: " + vehicle.getOdometer() + ", body style: " + vehicle.getVehicleType() + ", price: " + vehicle.getPrice()
+            );
         }
 
     }
@@ -85,12 +101,13 @@ public class UserInterface {
     public void processGetByYearRequest() {
         System.out.print("Please enter the min year: ");
         int minYear = scanner.nextInt();
-        System.out.println("Please enter the max year: ");
+        System.out.print("Please enter the max year: ");
         int maxYear = scanner.nextInt();
 
         List<Vehicle> yearConcept = dealership.getVehiclesByYear(minYear, maxYear);
         for (Vehicle vehicle : yearConcept) {
-            System.out.println(vehicle);
+            System.out.println("year: " + vehicle.getYear() + ", vin: " + vehicle.getVin() + ", make: " + vehicle.getMake() + ", model: " + vehicle.getModel() + ", color: " + vehicle.getColor() + ", mileage: " + vehicle.getOdometer() + ", body style: " + vehicle.getVehicleType() + ", price: " + vehicle.getPrice()
+            );
         }
 
     }
@@ -101,7 +118,7 @@ public class UserInterface {
 
         List<Vehicle> hues = dealership.getVehiclesByColor(color);
         for (Vehicle vehicle : hues) {
-            System.out.println(vehicle);
+            System.out.println(vehicle.getColor());
         }
     }
 
@@ -113,7 +130,7 @@ public class UserInterface {
 
         List<Vehicle> odometer = dealership.getVehiclesByMileage(minMileage, maxMileage);
         for(Vehicle vehicle : odometer){
-            System.out.println(vehicle);
+            System.out.println(vehicle.getOdometer());
         }
     }
 
@@ -123,19 +140,49 @@ public class UserInterface {
 
         List<Vehicle> bodyStyle = dealership.getVehiclesByType(carType);
         for(Vehicle vehicle : bodyStyle) {
-            System.out.println(vehicle);
+            System.out.println(vehicle.getVehicleType());
         }
     }
 
     public void processGetAllVehicleRequest() {
         List<Vehicle> vehicles = dealership.getAllVehicles();
         for(Vehicle vehicle : vehicles) {
-            System.out.println(vehicle);
+            System.out.println(
+                    "vin: " + vehicle.getVin() + ", year: " + vehicle.getYear() + ", make: " + vehicle.getMake() + ", model: " + vehicle.getModel() + ", color: " + vehicle.getColor() + ", mileage: " + vehicle.getOdometer() + ", body style: " + vehicle.getVehicleType() + ", price: " + vehicle.getPrice()
+            );
         }
     }
 
     public void processAddVehicleRequest() {
+        System.out.print("Enter vin: ");
+        int vin = scanner.nextInt();
 
+        System.out.print("Enter year: ");
+        int year = scanner.nextInt();
+
+        System.out.print("Enter make: ");
+        String make = scanner.next();
+
+        System.out.print("Enter model: ");
+        String model = scanner.next();
+
+        System.out.print("Enter color: ");
+        String color = scanner.next();
+
+        System.out.print("Enter mileage: ");
+        int odometer= scanner.nextInt();
+
+        System.out.print("Enter Body Style: ");
+        String vehicleType = scanner.next();
+
+        System.out.print("Enter price: ");
+        double price = scanner.nextDouble();
+
+       Vehicle newWhip = new Vehicle(vin,year,make,model,vehicleType,color,odometer,price);
+       dealership.addVehicle(newWhip);
+
+       DealershipFileManager dfm = new DealershipFileManager();
+       dfm.saveDealership(dealership);
     }
 
     public void processRemoveVehicleRequest() {

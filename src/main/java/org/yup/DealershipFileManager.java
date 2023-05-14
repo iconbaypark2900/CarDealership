@@ -7,13 +7,14 @@ import java.io.FileWriter;
 
 public class DealershipFileManager {
     public Dealership getDealership() {
-        Dealership dealership = new Dealership("Jon B", "2009 sw 102nd ter", "333-333-3333");
+        Dealership dealership = new Dealership("Jon B's Shop", "2009 sw 102nd ter", "333-333-3333");
 
         try {
             FileReader fr = new FileReader("dealership.csv");
             BufferedReader br = new BufferedReader(fr);
 
             String line;
+            br.readLine();
             br.readLine();
             while((line = br.readLine()) != null) {
 
@@ -46,8 +47,11 @@ public class DealershipFileManager {
             bw.write(dealership.getAddress() + "|" + dealership.getName() + "|" + dealership.getPhone());
             bw.newLine();
 
+            bw.write("vin|year|make|model|body style|color|mileage|price");
+            bw.newLine();
+
             for(Vehicle vehicle : dealership.getAllVehicles()) {
-                String stockSD = String.format("%d|%d|%s|%s|%s|%s|%s",
+                String stockSD = String.format("%d|%d|%s|%s|%s|%s|%d|%.2f",
                         vehicle.vin,
                         vehicle.year,
                         vehicle.make,
